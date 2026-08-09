@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "pollIntervalMs": 300000,
+  "anthropicMinPollMs": 600000,
+  "thresholds": {
+    "warning": 30,
+    "critical": 10
+  },
+  "windows": [
+    "5h",
+    "7d"
+  ],
+  "osNotify": true,
+  "osNotifyOnCriticalOnly": true
+}

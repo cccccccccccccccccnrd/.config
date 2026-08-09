@@ -1,1 +1,13 @@
 .DS_Store
+
+# Pi local runtime/secrets
+.pi/agent/auth.json
+.pi/agent/trust.json
+.pi/agent/sessions/
+.pi/agent/headroom-proxy.log
+.pi/agent/*.log
+.pi/agent/*-stats.json
+.pi/agent/models-store.json
+.pi/agent/bin/
+.pi/agent/npm/
+.pi/agent/git/

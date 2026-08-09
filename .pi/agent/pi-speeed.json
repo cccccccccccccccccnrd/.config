@@ -1,0 +1,21 @@
+{
+  "enabled": false,
+  "runcat": true,
+  "label": "tok/s",
+  "footerPrefix": "__off__",
+  "workingPrefix": "Runnin",
+  "icon": "✦",
+  "footer": true,
+  "renderIntervalMs": 250,
+  "speedAnimationMs": 1800,
+  "defaultRuncatIntervalMs": 167,
+  "minRuncatIntervalMs": 50,
+  "maxRuncatIntervalMs": 250,
+  "runcatScale": 6000,
+  "slidingWindowMs": 1000,
+  "minReliableDurationMs": 1000,
+  "maxDisplayTokS": 500,
+  "useProviderTokens": true,
+  "countStrategy": "estimate",
+  "persistStats": true
+}

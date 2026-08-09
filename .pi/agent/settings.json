@@ -1,0 +1,21 @@
+{
+  "lastChangelogVersion": "0.84.1",
+  "theme": "cnrd",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "high",
+  "editorPaddingX": 1,
+  "showHardwareCursor": true,
+  "packages": [
+    "npm:pi-web-access",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-simplify",
+    "npm:pi-speeed",
+    "npm:pi-advisor"
+  ],
+  "hideThinkingBlock": false,
+  "terminal": {
+    "showTerminalProgress": false
+  }
+}
