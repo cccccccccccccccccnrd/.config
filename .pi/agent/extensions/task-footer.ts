@@ -315,7 +315,7 @@ function usageNumber(value: unknown): number {
 	return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
-function sessionUsageText(ctx: any): string {
+function sessionUsageText(ctx: any, model: any): string {
 	let totalInput = 0;
 	let totalOutput = 0;
 	let totalCost = 0;
@@ -334,10 +334,20 @@ function sessionUsageText(ctx: any): string {
 	// Add the currently streaming assistant output before the finalized usage arrives.
 	totalOutput += currentMessageTokens();
 
+	const contextUsage = ctx.getContextUsage();
+	const contextWindow = contextUsage?.contextWindow ?? model?.contextWindow ?? 0;
+	const contextPercentValue = contextUsage?.percent ?? 0;
+	const contextPercent = contextUsage?.percent !== null ? contextPercentValue.toFixed(1) : "?";
+	const contextDisplay =
+		contextPercent === "?"
+			? `?/${formatTokens(contextWindow)}`
+			: `${contextPercent}%/${formatTokens(contextWindow)}`;
+
 	return [
 		`↑${formatTokens(totalInput)}`,
 		`↓${formatTokens(totalOutput)}`,
 		`$${totalCost.toFixed(3)}`,
+		contextDisplay,
 	].join(" ");
 }
 
@@ -370,7 +380,7 @@ export default function (pi: ExtensionAPI) {
 				invalidate() {},
 				render(width: number): string[] {
 					const model = currentModel ?? ctx.model;
-					const usageText = sessionUsageText(ctx);
+					const usageText = sessionUsageText(ctx, model);
 
 					const cwd = (ctx.sessionManager as any).getCwd?.() ?? ctx.cwd;
 					let cwdText = `${machineHostname} ${formatCwd(cwd)}`;
