@@ -4,7 +4,6 @@ import { isAbsolute, join, relative, resolve, sep } from "node:path";
 import type { AssistantMessageEvent } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-const DIVIDER = "⚹";
 const SUBSCRIPTION_REFRESH_MS = 5 * 60 * 1000;
 const SUBSCRIPTION_FETCH_TIMEOUT_MS = 10 * 1000;
 
@@ -180,7 +179,7 @@ function formatSubscriptionUsage(snapshot: UsageSnapshot, now = Date.now()): str
 		if (!window) continue;
 		parts.push(`${window.name} ${remainingPercent(window)}%/${formatResetDuration(window.resetAt, now)}`);
 	}
-	return parts.join(` ${DIVIDER} `);
+	return parts.join(" ");
 }
 
 function parseCodexUsageBody(provider: string, body: unknown): UsageSnapshot | undefined {
@@ -341,20 +340,20 @@ function sessionUsageText(ctx: any, model: any): string {
 	const contextPercent = contextUsage?.percent !== null ? contextPercentValue.toFixed(1) : "?";
 	const contextDisplay =
 		contextPercent === "?"
-			? `ctx ?/${formatTokens(contextWindow)}`
-			: `ctx ${contextPercent}%/${formatTokens(contextWindow)}`;
+			? `ctx?/${formatTokens(contextWindow)}`
+			: `ctx${contextPercent}%/${formatTokens(contextWindow)}`;
 
 	return [
-		`in ${formatTokens(totalInput)}`,
-		`out ${formatTokens(totalOutput)}`,
-		`$${totalCost.toFixed(3)} est`,
+		`↑${formatTokens(totalInput)}`,
+		`↓${formatTokens(totalOutput)}`,
+		`$${totalCost.toFixed(3)}`,
 		contextDisplay,
-	].join(` ${DIVIDER} `);
+	].join(" ");
 }
 
 function elapsedText(): string {
 	const elapsed = taskStartedAt ? formatElapsed(Date.now() - taskStartedAt) : lastRunText;
-	return [elapsed, subscriptionUsageText].filter(Boolean).join(` ${DIVIDER} `);
+	return [elapsed, subscriptionUsageText].filter(Boolean).join(" ");
 }
 
 export default function (pi: ExtensionAPI) {
@@ -386,13 +385,13 @@ export default function (pi: ExtensionAPI) {
 					const cwd = (ctx.sessionManager as any).getCwd?.() ?? ctx.cwd;
 					let cwdText = `${machineHostname} ${formatCwd(cwd)}`;
 					const sessionName = (ctx.sessionManager as any).getSessionName?.();
-					if (sessionName) cwdText += ` ${DIVIDER} ${sessionName}`;
+					if (sessionName) cwdText += ` ${sessionName}`;
 
 					const lines = [lineWithRightSide(usageText, cwdText, width)];
 
 					let modelText = model?.id || "no-model";
 					if (model?.reasoning) {
-						modelText += currentThinkingLevel === "off" ? ` ${DIVIDER} thinking off` : ` ${DIVIDER} ${currentThinkingLevel}`;
+						modelText += currentThinkingLevel === "off" ? " thinking off" : ` ${currentThinkingLevel}`;
 					}
 					if (footerData.getAvailableProviderCount() > 1 && model) {
 						modelText = `(${model.provider}) ${modelText}`;
@@ -404,7 +403,7 @@ export default function (pi: ExtensionAPI) {
 						const statusLine = Array.from(statuses.entries())
 							.sort(([a], [b]) => a.localeCompare(b))
 							.map(([, text]) => sanitizeStatusText(text))
-							.join(` ${DIVIDER} `);
+							.join(" ");
 						lines.push(truncatePlain(statusLine, width));
 					}
 
