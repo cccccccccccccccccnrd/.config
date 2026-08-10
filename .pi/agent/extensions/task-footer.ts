@@ -151,7 +151,7 @@ function usageFamily(provider: string): "codex" | "anthropic" | undefined {
 
 function providerUsageLabel(provider: string): string {
 	const index = provider.match(/-account-(\d+)$/)?.[1];
-	if (provider.startsWith("openai-codex")) return index ? `Codex A${index}` : "Codex";
+	if (provider.startsWith("openai-codex")) return index ? `codex a${index}` : "codex";
 	if (provider.startsWith("anthropic")) return index ? `Claude A${index}` : "Claude";
 	return provider;
 }
@@ -346,7 +346,7 @@ function sessionUsageText(ctx: any, model: any): string {
 	return [
 		`↑${formatTokens(totalInput)}`,
 		`↓${formatTokens(totalOutput)}`,
-		`$${totalCost.toFixed(3)}`,
+		`$${totalCost.toFixed(1)}`,
 		contextDisplay,
 	].join(" ");
 }
