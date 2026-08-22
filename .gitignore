@@ -1,5 +1,9 @@
 .DS_Store
 
+# Local zsh private config
+zsh/private.zsh
+zsh/*.local.zsh
+
 # Pi local runtime/secrets
 .pi/agent/auth.json
 .pi/agent/trust.json

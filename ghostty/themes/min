@@ -1,0 +1,26 @@
+# Ghostty theme: min
+# min: near-monochrome low-saturation gray with a tiny cool/lavender bias.
+
+background = #000000
+foreground = #c4c1c6
+cursor-color = #c4c1c6
+cursor-text = #0b0a0c
+selection-background = #211f23
+selection-foreground = #d8d5da
+
+palette = 0=#171719
+palette = 1=#8c858a
+palette = 2=#888d8a
+palette = 3=#8c8a87
+palette = 4=#898b91
+palette = 5=#8e8990
+palette = 6=#8f8d89
+palette = 7=#c4c1c6
+palette = 8=#68666b
+palette = 9=#aaa4a8
+palette = 10=#a8aca9
+palette = 11=#aba8a4
+palette = 12=#adb0b5
+palette = 13=#b2acb4
+palette = 14=#b8b5b0
+palette = 15=#e4e1e6

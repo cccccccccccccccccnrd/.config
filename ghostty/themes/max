@@ -1,0 +1,26 @@
+# Ghostty theme: max
+# Maximum contrast: full RGB + CMYK colors on black/white.
+
+background = #000000
+foreground = #ffffff
+cursor-color = #ffffff
+cursor-text = #000000
+selection-background = #ffffff
+selection-foreground = #000000
+
+palette = 0=#000000
+palette = 1=#ff0000
+palette = 2=#00ff00
+palette = 3=#ffff00
+palette = 4=#0000ff
+palette = 5=#ff00ff
+palette = 6=#00ffff
+palette = 7=#ffffff
+palette = 8=#808080
+palette = 9=#ff4040
+palette = 10=#40ff40
+palette = 11=#ffff40
+palette = 12=#4040ff
+palette = 13=#ff40ff
+palette = 14=#40ffff
+palette = 15=#ffffff

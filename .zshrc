@@ -10,7 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="cnrd"
+ZSH_THEME="max"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -66,6 +66,7 @@ ZSH_THEME="cnrd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM="$HOME/.config/zsh"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -104,16 +105,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Public-safe aliases. Private SSH/work aliases live in ~/.config/zsh/private.zsh.
 alias zshconfig="nano ~/.zshrc"
 alias ohmyzsh="nano ~/.oh-my-zsh"
 alias ll="ls -la"
-alias catpub="cat /Users/cnrd/.ssh/id_rsa.pub"
 alias gh="history|grep"
-alias lil="ssh root@lilnet.cnrd.computer"
-alias c="ssh cnrd@cnrd.computer"
-alias ceg="ssh cnrd@computerequipment.group"
-alias star="ssh star@192.168.1.153"
-alias cocoinfra="ssh -p 2222 cweise@cocoinfra.gm.fh-koeln.de"
+alias yr="yabai --restart-service"
+alias tt="$HOME/.config/scripts/toggle-theme.sh"
+
+if [[ -f "$HOME/.config/zsh/private.zsh" ]]; then
+  source "$HOME/.config/zsh/private.zsh"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -124,3 +126,25 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 . "/Users/cnrd/.deno/env"
 
+export PATH="$HOME/.local/bin:$PATH"
+
+
+# Herd injected PHP 8.4 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="/Users/cnrd/Library/Application Support/Herd/config/php/84/"
+
+
+# Herd injected PHP binary.
+export PATH="/Users/cnrd/Library/Application Support/Herd/bin/":$PATH
+
+# opencode
+export PATH=/Users/cnrd/.opencode/bin:$PATH
+
+# Attach to the clanker tmux session, creating it if needed
+alias clanker="tmux new-session -A -s clanker"
+
+# bun completions
+[ -s "/Users/cnrd/.bun/_bun" ] && source "/Users/cnrd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
