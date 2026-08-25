@@ -29,9 +29,8 @@ yabai -m rule --add app="^DevUtils$" manage=off
 yabai -m rule --add app="^FaceTime$" manage=off
 yabai -m rule --add app="^overlay$" manage=off
 
-# Subtle active-window border via JankyBorders.
-# 0x33ffffff = white at ~20% opacity. Install with:
-#   brew tap FelixKratz/formulae && brew install borders
+# JankyBorders configuration is versioned in ../borders/bordersrc.
+# Install with: brew tap FelixKratz/formulae && brew install borders
 if [ -x /opt/homebrew/bin/borders ]; then
-  /opt/homebrew/bin/borders active_color=0x33ffffff inactive_color=0x00000000 width=11.0 style=round hidpi=on &
+  /opt/homebrew/bin/borders &
 fi

@@ -50,5 +50,5 @@ alt - x : code -n
 
 ctrl - left : yabai -m window west --resize right:-300:0 2> /dev/null || yabai -m window --resize right:-300:0
 ctrl - down : yabai -m window north --resize bottom:0:300 2> /dev/null || yabai -m window --resize bottom:0:300
-ctrl - up : yabai -m window south --rºesize top:0:-300 2> /dev/null || yabai -m window --resize top:0:-300
+ctrl - up : yabai -m window south --resize top:0:-300 2> /dev/null || yabai -m window --resize top:0:-300
 ctrl - right : yabai -m window east --resize left:300:0 2> /dev/null || yabai -m window --resize left:300:0

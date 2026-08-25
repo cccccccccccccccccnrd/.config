@@ -1,11 +1,23 @@
 #!/usr/bin/env bash
-# Bring Finder forward. If Finder has no open window, reopen the last
-# Finder folder this script saw; otherwise fall back to $HOME.
+# Focus Finder when the current Space already has a Finder window; otherwise,
+# open one there. New windows reuse the front Finder folder when available,
+# falling back to the last saved folder or $HOME.
 
 set -u
 
 state_file="${XDG_STATE_HOME:-$HOME/.local/state}/finder-last-location"
 mkdir -p "$(dirname "$state_file")"
+
+finder_window_id="$(
+  yabai -m query --windows --space 2>/dev/null |
+    jq -r '.[] | select(.app == "Finder") | .id' 2>/dev/null |
+    head -n 1
+)"
+
+if [[ -n "$finder_window_id" ]]; then
+  yabai -m window "$finder_window_id" --focus
+  exit 0
+fi
 
 current_path="$(osascript <<'APPLESCRIPT' 2>/dev/null
 try
@@ -20,18 +32,24 @@ APPLESCRIPT
 )"
 
 if [[ -n "$current_path" && -d "$current_path" ]]; then
-  printf '%s\n' "$current_path" > "$state_file"
-  osascript -e 'tell application "Finder" to activate' >/dev/null 2>&1
-  exit 0
-fi
-
-last_path=""
-if [[ -f "$state_file" ]]; then
-  last_path="$(cat "$state_file" 2>/dev/null || true)"
-fi
-
-if [[ -n "$last_path" && -d "$last_path" ]]; then
-  open "$last_path"
+  target_path="$current_path"
+  printf '%s\n' "$target_path" > "$state_file"
 else
-  open "$HOME"
+  target_path=""
+  if [[ -f "$state_file" ]]; then
+    target_path="$(cat "$state_file" 2>/dev/null || true)"
+  fi
+
+  if [[ ! -d "$target_path" ]]; then
+    target_path="$HOME"
+  fi
 fi
+
+osascript - "$target_path" <<'APPLESCRIPT' >/dev/null 2>&1
+on run argv
+  set targetFolder to (POSIX file (item 1 of argv) as alias)
+  tell application "Finder"
+    make new Finder window to targetFolder
+  end tell
+end run
+APPLESCRIPT
