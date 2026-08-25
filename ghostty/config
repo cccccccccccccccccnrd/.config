@@ -53,4 +53,6 @@ font-family = Comic Code
 quit-after-last-window-closed = true
 
 # Toggle Ghostty's quick terminal from anywhere with Option+Shift+Enter.
+# The quick terminal preserves state, so repeated presses show/hide the same terminal.
 keybind = global:alt+shift+enter=toggle_quick_terminal
+quick-terminal-autohide = false
