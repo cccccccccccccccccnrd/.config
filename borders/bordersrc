@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-# Active border: translucent blush pink (0xAARRGGBB).
-borders active_color=0x99c0a0b8 inactive_color=0x00000000 width=11.0 style=round hidpi=on
+# Active border: neutral translucent grey (0xAARRGGBB).
+borders active_color=0x99b3b3b3 inactive_color=0x00000000 width=11.0 style=round hidpi=on
