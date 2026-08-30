@@ -139,9 +139,10 @@ export PATH="/Users/cnrd/Library/Application Support/Herd/bin/":$PATH
 # opencode
 export PATH=/Users/cnrd/.opencode/bin:$PATH
 
-# Auto-update Pi extension packages before normal interactive Pi startup.
-# Set PI_AUTO_UPDATE_EXTENSIONS=0 for one run to skip this wrapper.
-pi() {
+# Auto-update Pi itself and extension packages before normal interactive Pi startup via `piu`.
+# Set PI_AUTO_UPDATE=0 for one run to skip this wrapper.
+# Legacy PI_AUTO_UPDATE_EXTENSIONS=0 is also honoured.
+piu() {
   local _pi_first="${1:-}"
   case "$_pi_first" in
     update|install|remove|uninstall|list|config|-h|--help|-v|--version|-p|--print|--mode|--list-models|--export)
@@ -150,18 +151,18 @@ pi() {
       ;;
   esac
 
-  if [[ "${PI_AUTO_UPDATE_EXTENSIONS:-1}" != "0" ]]; then
-    local _pi_update_log="${PI_AUTO_UPDATE_EXTENSIONS_LOG:-$HOME/.pi/agent/auto-update-extensions.log}"
-    local _pi_lock_dir="${TMPDIR:-/tmp}/pi-auto-update-extensions.${UID:-$(id -u)}.lock"
+  if [[ "${PI_AUTO_UPDATE:-${PI_AUTO_UPDATE_EXTENSIONS:-1}}" != "0" ]]; then
+    local _pi_update_log="${PI_AUTO_UPDATE_LOG:-${PI_AUTO_UPDATE_EXTENSIONS_LOG:-$HOME/.pi/agent/auto-update.log}}"
+    local _pi_lock_dir="${TMPDIR:-/tmp}/pi-auto-update.${UID:-$(id -u)}.lock"
 
     if mkdir "$_pi_lock_dir" 2>/dev/null; then
       (
         trap 'rmdir "$_pi_lock_dir" 2>/dev/null' EXIT INT TERM
-        command pi update --extensions >"$_pi_update_log" 2>&1
+        command pi update --all >"$_pi_update_log" 2>&1
       )
       local _pi_update_status=$?
       if (( _pi_update_status != 0 )); then
-        print -u2 -- "pi: extension auto-update failed (see $_pi_update_log)"
+        print -u2 -- "piu: auto-update failed (see $_pi_update_log)"
       fi
     fi
   fi
