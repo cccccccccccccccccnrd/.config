@@ -8,6 +8,10 @@ set -u
 state_file="${XDG_STATE_HOME:-$HOME/.local/state}/finder-last-location"
 mkdir -p "$(dirname "$state_file")"
 
+if command -v yabai >/dev/null 2>&1; then
+  yabai -m display --focus mouse >/dev/null 2>&1 || true
+fi
+
 finder_window_id="$(
   yabai -m query --windows --space 2>/dev/null |
     jq -r '.[] | select(.app == "Finder") | .id' 2>/dev/null |

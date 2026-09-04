@@ -39,14 +39,15 @@ alt - d : yabai -m window --toggle split
 # alt - y : yabai -m space --mirror y-axis
 # alt - x : yabai -m space --mirror x-axis
 
-alt - return : open -na "Ghostty"
+alt - return : $HOME/.config/scripts/open-on-cursor-display.sh open -na "Ghostty"
 # Option+Shift+Enter is handled by Ghostty as a global quick terminal keybind.
 # alt + shift - return : $HOME/.config/yabai/scripts/open_ghostty_pi.sh
 # option + , applies a random Ghostty theme to the focused Ghostty terminal
 alt - 0x2B : $HOME/.config/scripts/ghostty-focused-random-theme.sh
 alt - 0x32 : $HOME/.config/scripts/open-last-finder-location.sh
-alt - y : open -n -a "firefox"
-alt - x : code -n
+alt - y : $HOME/.config/scripts/open-on-cursor-display.sh open -n -a "Firefox"
+alt - x : $HOME/.config/scripts/open-on-cursor-display.sh code -n
+alt - c : $HOME/.config/scripts/open-on-cursor-display.sh open -na "Obsidian"
 
 ctrl - left : yabai -m window west --resize right:-300:0 2> /dev/null || yabai -m window --resize right:-300:0
 ctrl - down : yabai -m window north --resize bottom:0:300 2> /dev/null || yabai -m window --resize bottom:0:300
