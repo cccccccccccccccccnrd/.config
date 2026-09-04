@@ -8,13 +8,37 @@ set -u
 state_file="${XDG_STATE_HOME:-$HOME/.local/state}/finder-last-location"
 mkdir -p "$(dirname "$state_file")"
 
+mouse_display=""
+finder_bounds=""
+
 if command -v yabai >/dev/null 2>&1; then
+  mouse_display_json="$(yabai -m query --displays --display mouse 2>/dev/null || true)"
+  if [[ -n "$mouse_display_json" ]] && command -v jq >/dev/null 2>&1; then
+    mouse_display="$(printf '%s' "$mouse_display_json" | jq -r '.index // empty' 2>/dev/null || true)"
+    finder_bounds="$(printf '%s' "$mouse_display_json" | jq -r '
+      .frame as $f
+      | (if ($f.w - 160) < 1200 then ($f.w - 160) else 1200 end) as $ww
+      | (if ($f.h - 160) < 800 then ($f.h - 160) else 800 end) as $hh
+      | [
+          ($f.x + (($f.w - $ww) / 2) | floor),
+          ($f.y + (($f.h - $hh) / 2) | floor),
+          ($f.x + (($f.w + $ww) / 2) | floor),
+          ($f.y + (($f.h + $hh) / 2) | floor)
+        ]
+      | @tsv
+    ' 2>/dev/null || true)"
+  fi
+
   yabai -m display --focus mouse >/dev/null 2>&1 || true
 fi
 
 finder_window_id="$(
-  yabai -m query --windows --space 2>/dev/null |
-    jq -r '.[] | select(.app == "Finder") | .id' 2>/dev/null |
+  if [[ -n "$mouse_display" ]]; then
+    yabai -m query --windows --display "$mouse_display" 2>/dev/null
+  else
+    yabai -m query --windows --space 2>/dev/null
+  fi |
+    jq -r '.[] | select(.app == "Finder" and ."is-visible") | .id' 2>/dev/null |
     head -n 1
 )"
 
@@ -49,11 +73,19 @@ else
   fi
 fi
 
-osascript - "$target_path" <<'APPLESCRIPT' >/dev/null 2>&1
+read -r left top right bottom <<< "$finder_bounds"
+
+osascript - "$target_path" "${left:-}" "${top:-}" "${right:-}" "${bottom:-}" <<'APPLESCRIPT' >/dev/null 2>&1
 on run argv
   set targetFolder to (POSIX file (item 1 of argv) as alias)
+  set hasBounds to ((count of argv) is 5 and item 2 of argv is not "")
+
   tell application "Finder"
-    make new Finder window to targetFolder
+    set finderWindow to make new Finder window to targetFolder
+    if hasBounds then
+      set bounds of finderWindow to {(item 2 of argv as integer), (item 3 of argv as integer), (item 4 of argv as integer), (item 5 of argv as integer)}
+    end if
+    activate
   end tell
 end run
 APPLESCRIPT
