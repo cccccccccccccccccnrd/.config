@@ -12,11 +12,6 @@ alt - tab : yabai -m window --focus stack.next
 # CapsLock is remapped to left_control in Karabiner, so CapsLock+Alt+Tab is ctrl+alt+tab here.
 ctrl + alt - tab : yabai -m window --focus stack.prev
 
-alt - j : yabai -m window --focus west
-alt - k : yabai -m window --focus north
-alt - l : $HOME/.config/scripts/alt-l-double-at.sh
-alt - 0x29 : yabai -m window --focus east
-
 alt + shift - down : yabai -m window --swap south
 alt + shift - up : yabai -m window --swap north
 alt + shift - left : yabai -m window --swap west
