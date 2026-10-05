@@ -40,7 +40,7 @@ alt - return : $HOME/.config/scripts/open-on-cursor-display.sh open -na "Ghostty
 # option + , applies a random Ghostty theme to the focused Ghostty terminal
 alt - 0x2B : $HOME/.config/scripts/ghostty-focused-random-theme.sh
 alt - 0x32 : $HOME/.config/scripts/open-last-finder-location.sh
-alt - y : $HOME/.config/scripts/open-on-cursor-display.sh open -n -a "Firefox"
+alt - y : $HOME/.config/scripts/open-on-cursor-display.sh open -n -a "Vivaldi"
 alt - x : $HOME/.config/scripts/open-on-cursor-display.sh code -n
 alt - c : $HOME/.config/scripts/open-on-cursor-display.sh open -na "Obsidian"
 
