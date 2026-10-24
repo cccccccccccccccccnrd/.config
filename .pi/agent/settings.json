@@ -12,7 +12,11 @@
     "npm:@juicesharp/rpiv-todo",
     "npm:pi-simplify",
     "npm:pi-speeed",
-    "npm:pi-advisor"
+    "npm:pi-advisor",
+    "npm:@dietrichgebert/ponytail",
+    "npm:pi-cc-extensions",
+    "npm:pi-subagents",
+    "npm:@companion-ai/feynman"
   ],
   "hideThinkingBlock": false,
   "terminal": {
