@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.84.1",
+  "lastChangelogVersion": "1.4.0",
   "theme": "max",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "high",
   "editorPaddingX": 1,
   "showHardwareCursor": true,
@@ -16,7 +16,13 @@
     "npm:@dietrichgebert/ponytail",
     "npm:pi-cc-extensions",
     "npm:pi-subagents",
-    "npm:@companion-ai/feynman"
+    {
+      "source": "npm:@companion-ai/feynman",
+      "extensions": [],
+      "skills": [],
+      "prompts": [],
+      "themes": []
+    }
   ],
   "hideThinkingBlock": false,
   "terminal": {
